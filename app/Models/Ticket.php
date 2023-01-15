@@ -24,4 +24,8 @@ class Ticket extends Model
     public function comments() {
         return $this->hasMany(Comment::class);
     }
+
+    public function priorities() {
+        return $this->belongsToMany(TicketPriority::class);
+    }
 }
