@@ -28,4 +28,12 @@ class Ticket extends Model
     public function priorities() {
         return $this->belongsToMany(TicketPriority::class);
     }
+
+    public function statuses() {
+        return $this->belongsToMany(TicketStatus::class);
+    }
+
+    public function types() {
+        return $this->belongsToMany(TicketType::class);
+    }
 }
