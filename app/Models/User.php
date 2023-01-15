@@ -50,4 +50,12 @@ class User extends Authenticatable
     public function projects() {
         return $this->hasMany(Project::class);
     }
+
+    public function submittedTickets() {
+        return $this->hasMany(Ticket::class, "submitter_id");
+    }
+
+    public function assignedTicket() {
+        return $this->hasMany(Ticket::class, "developer_id");
+    }
 }
