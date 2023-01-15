@@ -20,4 +20,8 @@ class Ticket extends Model
     public function project() {
         return $this->belongsTo(Project::class, "project_id");
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }
