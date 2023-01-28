@@ -1,52 +1,131 @@
-import Modal from "@/Components/Modal";
 import SidebarPage from "@/Components/SidbarPage";
-import Authenticated from "@/Layouts/AuthenticatedLayout"
-import { Link } from "@inertiajs/inertia-react";
-import { Table, Cell, HeaderCell, Column } from "rsuite-table";
-import 'rsuite-table/dist/css/rsuite-table.css';
-function Settings() {
-    const myData = [
-        {
-            firstName: "Ali",
-            lastName: "Sbai",
-            email: "ali.sbai.96@gmail.com",
-            roles: ["Admin"]
-        },
-        {
-            firstName: "Zakaria",
-            lastName: "Sbai",
-            email: "zackaria.sbai.93@gmail.com",
-            roles: ["Submitter", "Developer"]
-        }
-    ]
+import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { useState } from "react";
+import { Drawer, Table, Button } from "rsuite";
+import { useForm } from "@inertiajs/inertia-react";
+import 'rsuite/styles/index.less'
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+
+
+function Settings(props) {
+    const userData = {};
+    userData.firstName = props.auth.user.first_name;
+    userData.lastName = props.auth.user.last_name;
+    userData.email = props.auth.user.email;
+
+    userData.roles = props.auth.roles.map(role => role.title).join(", ");
+    
+    const {Column, Cell, HeaderCell} = Table;
+
+    const [open, setOpen] = useState(false);
+
+
+    const { data, setData, post, processing, errors } = useForm({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+      })
+
+      function submit(e) {
+        e.preventDefault();
+        post(route("login"));
+      }
 
     return (
-        <Authenticated>
+        <Authenticated auth={props.auth}>
             <SidebarPage title="Settings">
-            {/* <Table height={400} data={myData}>
-                <Column width={150} sortable>
-                    <HeaderCell>First Name</HeaderCell>
-                    <Cell dataKey="firstName" />
-                </Column>
-                <Column width={150} sortable>
-                    <HeaderCell>Last Name</HeaderCell>
-                    <Cell dataKey="lastName" />
-                </Column>
-                <Column width={300} sortable>
-                    <HeaderCell >Email Address</HeaderCell>
-                    <Cell dataKey="email" />
-                </Column>
-                <Column width={150} sortable>
-                    <HeaderCell>Roles</HeaderCell>
-                    <Cell dataKey="roles" />
-                </Column>
-                <Column >
-                    <HeaderCell>Actions</HeaderCell>
-                    <Cell >
-                        <Link className="text-sm text-violet-600">Edit</Link>
-                    </Cell>
-                </Column>
-            </Table> */}
+                <Table 
+                height={400}
+                data={[userData]}
+                >
+                    <Column width={160} align="center" flexGrow={2}>
+                        <HeaderCell>First Name</HeaderCell>
+                        <Cell dataKey="firstName" />
+                    </Column>
+                    <Column width={160} align="center" flexGrow={2}>
+                        <HeaderCell>Last Name</HeaderCell>
+                        <Cell dataKey="lastName" />
+                    </Column>
+                    <Column width={160} align="center" flexGrow={4}>
+                        <HeaderCell>Email Address</HeaderCell>
+                        <Cell dataKey="email" />
+                    </Column>
+                    <Column width={160} align="center" flexGrow={3}>
+                        <HeaderCell>Roles</HeaderCell>
+                        <Cell dataKey="roles" />
+                    </Column>
+                    <Column width={160} align="left" flexGrow={1}>
+                        <HeaderCell>Action</HeaderCell>
+                        <Cell>
+                            <Button appearance="link" size="xs" onClick={() => setOpen(true)}>Edit</Button>
+                        </Cell>
+                    </Column>
+                </Table>
+                <Drawer backdrop={"static"} open={open} onClose={() => setOpen(false)}>
+                    <Drawer.Header>
+                    <Drawer.Title>Edit My Info</Drawer.Title>
+                    </Drawer.Header>
+                    <Drawer.Body>
+                    <form onSubmit={submit}>
+                        <div>
+                            <InputLabel forInput="first-name" value="First Name" />
+
+                            <TextInput
+                                id="first-name"
+                                type="text"
+                                name="firstName"
+                                value={data.firstName}
+                                className="mt-1 block w-full"
+                                isFocused={true}
+                                handleChange={(e) => setData("firstName", e.target.value)}
+                            />
+
+                            <InputError message={errors.firstName} className="mt-2" />
+                        </div>
+
+                        <div className="mt-4">
+                            <InputLabel forInput="last-name" value="Last Name" />
+
+                            <TextInput
+                                id="last-name"
+                                type="text"
+                                name="lastName"
+                                value={data.lastName}
+                                className="mt-1 block w-full"
+                                autoComplete="current-password"
+                                handleChange={(e) => setData("lastName", e.target.value)}
+                            />
+
+                            <InputError message={errors.password} className="mt-2" />
+                        </div>
+
+                        <div className="mt-4">
+                            <InputLabel forInput="email" value="Email Address" />
+
+                            <TextInput
+                                id="email"
+                                type="email"
+                                name="email"
+                                value={data.email}
+                                className="mt-1 block w-full"
+                                autoComplete="current-password"
+                                handleChange={(e) => setData("email", e.target.value)}
+                            />
+
+                            <InputError message={errors.password} className="mt-2" />
+                        </div>
+
+                        <div className="flex items-center justify-start mt-4">
+                            <PrimaryButton processing={processing}>
+                                Save
+                            </PrimaryButton>
+                        </div>
+                    </form>
+                    </Drawer.Body>
+                </Drawer>
             </SidebarPage>
         </Authenticated>
     )
