@@ -23,15 +23,15 @@ function Settings(props) {
     const [open, setOpen] = useState(false);
 
 
-    const { data, setData, post, processing, errors } = useForm({
-        firstName: userData.firstName,
-        lastName: userData.lastName,
+    const { data, setData, patch, processing, errors } = useForm({
+        first_name: userData.firstName,
+        last_name: userData.lastName,
         email: userData.email,
       })
 
       function submit(e) {
         e.preventDefault();
-        post(route("login"));
+        patch(route("profile.update"));
       }
 
     return (
@@ -64,7 +64,7 @@ function Settings(props) {
                         </Cell>
                     </Column>
                 </Table>
-                <Drawer backdrop={"static"} open={open} onClose={() => setOpen(false)}>
+                <Drawer backdrop={"true"} open={open} onClose={() => setOpen(false)}>
                     <Drawer.Header>
                     <Drawer.Title>Edit My Info</Drawer.Title>
                     </Drawer.Header>
@@ -76,14 +76,15 @@ function Settings(props) {
                             <TextInput
                                 id="first-name"
                                 type="text"
-                                name="firstName"
-                                value={data.firstName}
+                                name="first_name"
+                                value={data.first_name}
                                 className="mt-1 block w-full"
                                 isFocused={true}
-                                handleChange={(e) => setData("firstName", e.target.value)}
+                                handleChange={(e) => setData("first_name", e.target.value)}
+                                required={true}
                             />
 
-                            <InputError message={errors.firstName} className="mt-2" />
+                            <InputError message={errors.first_name} className="mt-2" />
                         </div>
 
                         <div className="mt-4">
@@ -92,14 +93,15 @@ function Settings(props) {
                             <TextInput
                                 id="last-name"
                                 type="text"
-                                name="lastName"
-                                value={data.lastName}
+                                name="last_name"
+                                value={data.last_name}
                                 className="mt-1 block w-full"
                                 autoComplete="current-password"
-                                handleChange={(e) => setData("lastName", e.target.value)}
+                                handleChange={(e) => setData("last_name", e.target.value)}
+                                required={true}
                             />
 
-                            <InputError message={errors.password} className="mt-2" />
+                            <InputError message={errors.last_name} className="mt-2" />
                         </div>
 
                         <div className="mt-4">
@@ -113,9 +115,10 @@ function Settings(props) {
                                 className="mt-1 block w-full"
                                 autoComplete="current-password"
                                 handleChange={(e) => setData("email", e.target.value)}
+                                required={true}
                             />
 
-                            <InputError message={errors.password} className="mt-2" />
+                            <InputError message={errors.email} className="mt-2" />
                         </div>
 
                         <div className="flex items-center justify-start mt-4">
