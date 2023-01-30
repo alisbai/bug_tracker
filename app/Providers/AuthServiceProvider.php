@@ -4,6 +4,8 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,7 +26,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
+        Gate::define("access_manage_roles_page", function(User $user) {
+            $roles = $user->roles;
+            foreach($roles as $role) {
+                if($role->title == "Admin") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 }
