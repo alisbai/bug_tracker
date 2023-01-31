@@ -36,6 +36,7 @@ Route::get("/settings", function() {
 
 Route::middleware('auth')->group(function () {
     Route::get("/manage_roles", [RolesController::class, "get"])->name("roles.get");
+    Route::post("/manage_roles", [RolesController::class, "update"])->name("roles.update");
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

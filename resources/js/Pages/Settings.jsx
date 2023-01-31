@@ -57,7 +57,7 @@ function Settings(props) {
                         <HeaderCell>Roles</HeaderCell>
                         <Cell dataKey="roles" />
                     </Column>
-                    <Column width={160} align="left" flexGrow={1}>
+                    <Column width={160} align="center" flexGrow={1}>
                         <HeaderCell>Action</HeaderCell>
                         <Cell>
                             <Button appearance="link" size="xs" onClick={() => setOpen(true)}>Edit</Button>
