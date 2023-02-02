@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RolesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,7 @@ Route::get("/settings", function() {
 Route::middleware('auth')->group(function () {
     Route::get("/manage_roles", [RolesController::class, "get"])->name("roles.get");
     Route::post("/manage_roles", [RolesController::class, "update"])->name("roles.update");
+    Route::get("/manage_project_staff", [ProjectController::class, "get"])->name("manageProjectsStaff.get");
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

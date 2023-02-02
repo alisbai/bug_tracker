@@ -27,7 +27,7 @@ export default function Authenticated({ auth, children }) {
                             
                             <li><SidebarItem title="Dashboard" icon={faGauge} routeFunc={route} route={route("dashboard")} /></li>
                             {roles.includes("Admin") && <li><SidebarItem title="Manage Role Assignment" icon={faIdBadge} routeFunc={route} route={route("roles.get")} /></li>}
-                            {(roles.includes("Admin") || roles.includes("Project Manager"))&& <li><SidebarItem title="Manage Projects Staff" icon={faUsers} routeFunc={route} route={route("origin")}/></li>}
+                            {(roles.includes("Admin") || roles.includes("Project Manager"))&& <li><SidebarItem title="Manage Projects Staff" icon={faUsers} routeFunc={route} route={route("manageProjectsStaff.get")}/></li>}
                             {(roles.includes("Admin") || roles.includes("Project Manager")) &&<li><SidebarItem title="My Projects" icon={faProjectDiagram} routeFunc={route}  route={route("origin")}/></li>}
                             <li><SidebarItem title="My Tickets" icon={faTicket} routeFunc={route}  route={route("origin")}/></li>
                             <div className='mt-6 mb-6 m-auto w-3/4 border border-solid border-slate-800 '></div>
