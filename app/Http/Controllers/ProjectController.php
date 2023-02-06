@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProjectUpdateRequest;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -13,9 +14,19 @@ use Symfony\Component\Console\Input\Input;
 class ProjectController extends Controller
 {
     public function index(Request $request) {
-        if(Gate::allows("can_view_all_projects")) {
+        if(Gate::allows("view_projects_as_admin")) {
+            // dd("hi");
+            return Inertia::render("AdminProjects", ["projects" => Project::all()]);
+        } elseif (Gate::allows("view_projects_as_project_manager")) {
             return Inertia::render("");
+        } else {
+            abort(403);
         }
+    }
+
+    public function update(ProjectUpdateRequest $request) {
+        // dd($request->input("projectData"));
+        return redirect()->route("dashboard");
     }
 
     public function getProjectsToManageStaff(Request $request) {

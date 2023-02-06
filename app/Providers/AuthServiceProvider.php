@@ -47,8 +47,12 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define("can_view_all_projects", function(User $user) {
+        Gate::define("view_projects_as_admin", function(User $user) {
             return $user->hasRole("Admin");
+        });
+
+        Gate::define("view_projects_as_project_manager", function(User $user) {
+            return $user->hasRole("Project Manager");
         });
     }
 }

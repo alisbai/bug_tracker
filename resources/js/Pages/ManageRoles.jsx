@@ -1,9 +1,6 @@
 import SidebarPage from "@/Components/SidbarPage";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Table, Button, Drawer, Tag } from "rsuite";
-import InputLabel from "@/Components/InputLabel";
-import TextInput from "@/Components/TextInput";
-import InputError from "@/Components/InputError";
 import 'rsuite/styles/index.less'
 import { useState } from "react";
 import { Link } from "@inertiajs/inertia-react";
