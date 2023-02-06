@@ -26,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
         Gate::define("access_manage_roles_page", function(User $user) {
             $roles = $user->roles;
             foreach($roles as $role) {
@@ -35,6 +36,19 @@ class AuthServiceProvider extends ServiceProvider
                     return false;
                 }
             }
+        });
+
+        Gate::define("manage_project_staff", function(User $user, $project) {
+            if($user->hasRole("Admin")) {
+                return true;
+            } elseif($user->hasRole("Project Manager") && $user->projects->contains($project)) {
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define("can_view_all_projects", function(User $user) {
+            return $user->hasRole("Admin");
         });
     }
 }

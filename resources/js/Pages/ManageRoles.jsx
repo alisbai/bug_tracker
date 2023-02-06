@@ -107,66 +107,14 @@ function ManageRoles(props){
                                 }
                             </div>
                             <div>
-                                <Link className="bg-violet-700 text-slate-50 p-4 rounded py-2" as="button" method="post" href={route("roles.update")} data={{userRoles: userRolesToSubmit}} onClick={() => setOpen(false)}>Save</Link>
+                                <Link 
+                                className="bg-violet-700 text-slate-50 p-4 rounded py-2" 
+                                as="button" method="post" 
+                                href={route("roles.update")} 
+                                data={{userRoles: userRolesToSubmit}} 
+                                onClick={() => setOpen(false)}
+                                >Save</Link>
                             </div>
-                        {/* <form>
-                            <div>
-                                <InputLabel forInput="first-name" value="First Name" />
-
-                                <TextInput
-                                    id="first-name"
-                                    type="text"
-                                    name="first_name"
-                                    value={data.first_name}
-                                    className="mt-1 block w-full"
-                                    isFocused={true}
-                                    handleChange={(e) => setData("first_name", e.target.value)}
-                                    required={true}
-                                />
-
-                                <InputError message={errors.first_name} className="mt-2" />
-                            </div>
-
-                            <div className="mt-4">
-                                <InputLabel forInput="last-name" value="Last Name" />
-
-                                <TextInput
-                                    id="last-name"
-                                    type="text"
-                                    name="last_name"
-                                    value={data.last_name}
-                                    className="mt-1 block w-full"
-                                    autoComplete="current-password"
-                                    handleChange={(e) => setData("last_name", e.target.value)}
-                                    required={true}
-                                />
-
-                                <InputError message={errors.last_name} className="mt-2" />
-                            </div>
-
-                            <div className="mt-4">
-                                <InputLabel forInput="email" value="Email Address" />
-
-                                <TextInput
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    value={data.email}
-                                    className="mt-1 block w-full"
-                                    autoComplete="current-password"
-                                    handleChange={(e) => setData("email", e.target.value)}
-                                    required={true}
-                                />
-
-                                <InputError message={errors.email} className="mt-2" />
-                            </div>
-
-                            <div className="flex items-center justify-start mt-4">
-                                <PrimaryButton processing={processing}>
-                                    Save
-                                </PrimaryButton>
-                            </div>
-                        </form> */}
                         </Drawer.Body>
                     </Drawer>
                 </SidebarPage>

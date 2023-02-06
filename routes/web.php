@@ -38,7 +38,11 @@ Route::get("/settings", function() {
 Route::middleware('auth')->group(function () {
     Route::get("/manage_roles", [RolesController::class, "get"])->name("roles.get");
     Route::post("/manage_roles", [RolesController::class, "update"])->name("roles.update");
-    Route::get("/manage_project_staff", [ProjectController::class, "get"])->name("manageProjectsStaff.get");
+    Route::get("/projects", [ProjectController::class, "index"])->name("projects.index");
+    Route::get("/project_staff", [ProjectController::class, "users"])->name("project.users");
+    Route::post("/project_add_user", [ProjectController::class, "addUser"])->name("project.add.user");
+    Route::post("/project_remove_user", [ProjectController::class, "removeUser"])->name("project.remove.user");
+    Route::get("/manage_project_staff", [ProjectController::class, "getProjectsToManageStaff"])->name("manageProjectsStaff.get");
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
