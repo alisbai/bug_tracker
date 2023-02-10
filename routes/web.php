@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::post("/project-add-user", [ProjectController::class, "addUser"])->name("project.add.user");
     Route::post("/project-remove-user", [ProjectController::class, "removeUser"])->name("project.remove.user");
     Route::get("/manage-project-staff", [ProjectController::class, "getProjectsToManageStaff"])->name("manageProjectsStaff.get");
+    Route::get("/project-tickets", [ProjectController::class, "tickets"])->name("project.tickets");
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

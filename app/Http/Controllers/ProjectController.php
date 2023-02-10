@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProjectTicketsRequest;
 use App\Http\Requests\ProjectUpdateRequest;
 use App\Models\Project;
 use App\Models\User;
@@ -95,6 +96,7 @@ class ProjectController extends Controller
     }
 
     public function removeUser(Request $request) {
+        
         $projectId = $request->input("projectId");
         $project = Project::find($projectId);
         if(!Gate::allows("manage_project_staff", $project)) {
@@ -111,5 +113,19 @@ class ProjectController extends Controller
             return redirect()->route("dashboard");
         }
         return redirect()->route("project.users", ["projectId" => $projectId]);
+    }
+
+    public function tickets(ProjectTicketsRequest $request) {
+        $user = $request->user();
+        $tickets = Project::find($request->projectId)->tickets;
+        if($user->hasRole("Admin")) {
+            return Inertia::render("AdminTickets", [
+                "tickets" => $tickets
+            ]);
+        } else {
+            return Inertia::render("ProjectManagerTickets", [
+                "tickets" => $tickets
+            ]);
+        }
     }
 }

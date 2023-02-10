@@ -8,10 +8,11 @@ import 'rsuite/styles/index.less'
 import EditProjectInfoDrawer from "@/Components/EditProjectInfoDrawer";
 
 function AdminProjects(props) {
-    console.log(props.errors);
+
     const {Cell, Column, HeaderCell} = Table;
 
     const [open, setOpen] = useState(false);
+
     const [drawerData, setDrawerData] = useState({});
 
     const [projectData, setProjectData] = useState({
@@ -80,7 +81,7 @@ function AdminProjects(props) {
                             href="#" 
                             onClick={() => handleOpen(rowData)}
                             >Edit Project Info</a>
-                            <Link className="text-xs">View Tickets</Link>
+                            <Link href={route("project.tickets")} data={{projectId: rowData.id}} className="text-xs">View Tickets</Link>
                         </div>
                     )}</Cell>
                 </Column>
