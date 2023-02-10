@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::get("/manage-roles", [RolesController::class, "get"])->name("roles.get");
     Route::post("/manage-roles", [RolesController::class, "update"])->name("roles.update");
     Route::get("/projects", [ProjectController::class, "index"])->name("projects.index");
-    Route::patch("/update-project", [ProjectController::class, "update"])->name("project.update");
+    Route::patch("/project-update", [ProjectController::class, "update"])->name("project.update");
     Route::get("/project-staff", [ProjectController::class, "users"])->name("project.users");
     Route::post("/project-add-user", [ProjectController::class, "addUser"])->name("project.add.user");
     Route::post("/project-remove-user", [ProjectController::class, "removeUser"])->name("project.remove.user");

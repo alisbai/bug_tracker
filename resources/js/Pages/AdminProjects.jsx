@@ -1,15 +1,11 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import InputLabel from "@/Components/InputLabel";
-import InputError from "@/Components/InputError";
-import TextInput from "@/Components/TextInput";
 import SidebarPage from "@/Components/SidbarPage";
 import { Link } from "@inertiajs/inertia-react";
-import { router } from '@inertiajs/react'
 import { useEffect, useState } from "react";
-import { Button, Drawer, Table } from "rsuite";
+import { Table } from "rsuite";
 import 'rsuite/styles/index.less'
-import TextFieldInput from "@/Components/TextFieldInput";
-import PrimaryButton from "@/Components/PrimaryButton";
+
+import EditProjectInfoDrawer from "@/Components/EditProjectInfoDrawer";
 
 function AdminProjects(props) {
     console.log(props.errors);
@@ -39,12 +35,6 @@ function AdminProjects(props) {
             [key]: value,
         }))
       }
-    
-      function handleSubmit(e) {
-          e.preventDefault();
-          router.patch(route("project.update"), projectData);
-      }
-
 
     const handleOpen = (rowData) => {
         setDrawerData(rowData);
@@ -58,7 +48,6 @@ function AdminProjects(props) {
     return (
         <Authenticated auth={props.auth}>
             <SidebarPage title="My Projects">
-
 
                 <Table 
                 data={props.projects}
@@ -97,55 +86,13 @@ function AdminProjects(props) {
                 </Column>
                 </Table>
 
-
-            <Drawer
-            open={open}
-            onClose= {handleClose}
-            >
-                <Drawer.Header>
-                    <Drawer.Title>Drawer Title</Drawer.Title>
-                    <Drawer.Actions>
-                        <Button onClick={() => setOpen(false)}>Cancel</Button>
-                    </Drawer.Actions>
-                </Drawer.Header>
-                
-                <Drawer.Body>
-
-
-                    <div onSubmit={handleSubmit}>
-                        
-                        <InputLabel forInput="name" value="Project Name" />
-                        <TextInput
-                            id="name"
-                            type="text"
-                            name="name"
-                            value={projectData.name}
-                            className="mt-1 block w-full mb-2"
-                            isFocused={true}
-                            handleChange={handleChange}
-                        />
-                        <InputError message={props.errors.name} className="mb-5" />
-
-                        <InputLabel forInput="description" value="Project Description" />
-                        <TextFieldInput
-                            id="description"
-                            name="description"
-                            className="mt-1 block w-full mb-2"
-                            rows={6}
-                            handleChange={handleChange}
-                            value={projectData.description}
-                        />
-                        <InputError message={props.errors.description} className="mb-5" />
-
-                        <Link 
-                        className="bg-violet-700 text-slate-50 p-4 rounded py-2" 
-                        data={projectData} method="patch" 
-                        href={route("project.update")} 
-                        type="button"
-                        >Save</Link>
-                    </div>
-                </Drawer.Body>
-            </Drawer>
+            <EditProjectInfoDrawer 
+            open={open} 
+            handleClose={handleClose}
+            handleChange={handleChange}
+            projectData={projectData}
+            errors={props.errors}
+            />
             </SidebarPage>
         </Authenticated>
     )

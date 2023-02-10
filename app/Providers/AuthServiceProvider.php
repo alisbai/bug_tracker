@@ -54,5 +54,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define("view_projects_as_project_manager", function(User $user) {
             return $user->hasRole("Project Manager");
         });
+
+        Gate::define("edit_project_info", function(User $user) {
+            return $user->hasRole("Admin");
+        });
     }
 }

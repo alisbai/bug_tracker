@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Symfony\Component\Console\Input\Input;
@@ -15,18 +16,24 @@ class ProjectController extends Controller
 {
     public function index(Request $request) {
         if(Gate::allows("view_projects_as_admin")) {
-            // dd("hi");
             return Inertia::render("AdminProjects", ["projects" => Project::all()]);
         } elseif (Gate::allows("view_projects_as_project_manager")) {
-            return Inertia::render("");
+            $projectManager = Auth::user();
+            return Inertia::render("ProjectManagerProjects", ["projects" => $projectManager->projects]);
         } else {
             abort(403);
         }
     }
 
     public function update(ProjectUpdateRequest $request) {
-        // dd($request->input("projectData"));
-        return redirect()->route("dashboard");
+        if(!Gate::allows("edit_project_info")) {
+            abort(403);
+        }
+        $project = Project::find($request->id);
+        $project->name = $request->name;
+        $project->description = $request->description;
+        $project->save();
+        return redirect()->route("projects.index");
     }
 
     public function getProjectsToManageStaff(Request $request) {
