@@ -16,6 +16,11 @@ class ProjectSeeder extends Seeder
      */
     public function run()
     {
-        Project::factory()->count(10)->has(User::factory()->count(2))->create();
+        // Project::factory()->count(10)->has(User::factory()->count(2))->create();
+        $projects = Project::factory()->count(10)->create();
+        $users = User::all();
+        $projects->each(function($project) use ($users) {
+            $project->users()->attach($users->random()->id);
+        });
     }
 }
