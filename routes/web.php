@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RolesController;
@@ -49,6 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get("/ticket", [TicketController::class, "get"])->name("ticket.get");
+    Route::post("add-comment", [CommentController::class, "add"])->name("comment.add");
+    Route::get("/user-tickets", [TicketController::class, "getUserTickets"])->name("user.tickets");
 });
 
 require __DIR__.'/auth.php';

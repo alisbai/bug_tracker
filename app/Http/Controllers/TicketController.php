@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketGetRequest;
+use App\Http\Requests\TicketGetUserTicketRequest;
 use App\Models\Project;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -18,5 +19,9 @@ class TicketController extends Controller
             'project' => $project,
             'ticket' => $ticket
         ]);
+    }
+
+    public function getUserTickets(TicketGetUserTicketRequest $request) {
+
     }
 }
