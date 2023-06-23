@@ -26,14 +26,14 @@ class Ticket extends Model
     }
 
     public function priorities() {
-        return $this->belongsToMany(TicketPriority::class);
+        return $this->belongsToMany(TicketPriority::class, "ticket_ticket_status", "ticket_id", "status_id");
     }
 
     public function statuses() {
-        return $this->belongsToMany(TicketStatus::class);
+        return $this->belongsToMany(TicketStatus::class, "ticket_ticket_status", "ticket_id", "status_id");
     }
 
     public function types() {
-        return $this->belongsToMany(TicketType::class);
+        return $this->belongsToMany(TicketType::class, "ticket_ticket_type", "ticket_id", "type_id");
     }
 }

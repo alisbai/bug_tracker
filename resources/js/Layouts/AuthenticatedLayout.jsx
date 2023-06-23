@@ -28,7 +28,7 @@ export default function Authenticated({ auth, children }) {
                             <li><SidebarItem title="Dashboard" icon={faGauge} routeFunc={route} routesToHighlightAt={[route("dashboard")]} route={route("dashboard")}/></li>
                             {roles.includes("Admin") && <li><SidebarItem title="Manage Role Assignment" icon={faIdBadge} routesToHighlightAt={[route("roles.get")]} routeFunc={route} route={route("roles.get")} /></li>}
                             {(roles.includes("Admin") || roles.includes("Project Manager"))&& <li><SidebarItem title="Manage Projects Staff" icon={faUsers} routesToHighlightAt={[route("manageProjectsStaff.get"), route("project.users")]} routeFunc={route} route={route("manageProjectsStaff.get")}/></li>}
-                            {(roles.includes("Admin") || roles.includes("Project Manager")) &&<li><SidebarItem title="My Projects" icon={faProjectDiagram} routesToHighlightAt={[route("projects.index")]} routeFunc={route}  route={route("projects.index")}/></li>}
+                            {(roles.includes("Admin") || roles.includes("Project Manager")) &&<li><SidebarItem title="My Projects" icon={faProjectDiagram} routesToHighlightAt={[route("projects.index"), route("project.tickets")]} routeFunc={route}  route={route("projects.index")}/></li>}
                             <li><SidebarItem title="My Tickets" icon={faTicket} routeFunc={route} routesToHighlightAt={[route("origin")]} route={route("origin")}/></li>
                             <div className='mt-6 mb-6 m-auto w-3/4 border border-solid border-slate-800 '></div>
                             <li><SidebarItem title="Settings" icon={faGears} routesToHighlightAt={[route("settings")]} routeFunc={route} route={route("settings")}/></li>

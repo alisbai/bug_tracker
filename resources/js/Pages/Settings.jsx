@@ -3,12 +3,12 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { useState } from "react";
 import { Drawer, Table, Button } from "rsuite";
 import { useForm } from "@inertiajs/inertia-react";
-import 'rsuite/styles/index.less'
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 
+import 'rsuite/styles/index.less'
 
 function Settings(props) {
     const userData = {};

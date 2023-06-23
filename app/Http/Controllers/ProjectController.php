@@ -116,16 +116,13 @@ class ProjectController extends Controller
     }
 
     public function tickets(ProjectTicketsRequest $request) {
-        $user = $request->user();
-        $tickets = Project::find($request->projectId)->tickets;
-        if($user->hasRole("Admin")) {
-            return Inertia::render("AdminTickets", [
-                "tickets" => $tickets
-            ]);
-        } else {
-            return Inertia::render("ProjectManagerTickets", [
-                "tickets" => $tickets
-            ]);
-        }
+        $project = Project::find($request->projectId);
+        $tickets = $project->tickets;
+
+        return Inertia::render("ProjectTickets", [
+            "project" => $project,
+            "tickets" => $tickets
+        ]);
+        
     }
 }
