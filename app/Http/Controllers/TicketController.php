@@ -17,16 +17,30 @@ class TicketController extends Controller
         $user = Auth::user();
 
         if ($user->hasRole("Admin")) {
-            $ticket = Ticket::select('id','title','description')->get();
+            $ticket = Ticket::select('id','project_id','title','description')->get();
             return Inertia::render("AdminMyTickets", [
                 'ticket' => $ticket
             ]);
         } else if($user->hasRole("Developer")){
-            $ticket = Ticket::select('id','title','description')->where('developer_id',$user->id)->get();
+            $ticket = Ticket::select('id','project_id','title','description')->where('developer_id',$user->id)->get();
             return Inertia::render("DeveloperMyTickets", [
                 'ticket' => $ticket
             ]);
         }   
+    }
+
+    public function getUserTickets(TicketGetUserTicketRequest $request) {
+
+    }
+
+    public function get(TicketGetRequest $request) {
+        $project = Project::find($request->projectId);
+        $ticket = Ticket::with(["types", "priorities", "statuses", "submitter", "developer", "comments.user"])->find($request->ticketId);
+
+        return Inertia::render("Ticket", [
+            'project' => $project,
+            'ticket' => $ticket
+        ]);
     }
 
 }
