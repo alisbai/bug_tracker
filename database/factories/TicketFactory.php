@@ -22,12 +22,8 @@ class TicketFactory extends Factory
             "title" => fake()->name(),
             "description" => fake()->name(),
             "project_id" => Project::all()->random(1)->first()->id,
-            "developer_id" => User::inRandomOrder()->whereHas("roles", function($query){
-                $query->where("title", "Developer");
-            })->first()->id,
-            "submitter_id" => User::inRandomOrder()->whereHas("roles", function($query) {
-                $query->where("title", "Submitter");
-            })->first()->id
+            "developer_id" => "1",
+            "submitter_id" => "2"
         ];
     }
 }
