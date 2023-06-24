@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get("/ticket", [TicketController::class, "get"])->name("ticket.get");
     Route::post("add-comment", [CommentController::class, "add"])->name("comment.add");
-    Route::get("/tickets", [TicketController::class, "all"])->name("tickers.list");
+    Route::get("/tickets", [TicketController::class, "all"])->name("tickets.list");
 });
 
 require __DIR__.'/auth.php';
