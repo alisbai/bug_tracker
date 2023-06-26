@@ -2,7 +2,14 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import SidebarPage from "@/Components/SidbarPage";
 import { Link } from "@inertiajs/inertia-react";
 import { useEffect, useState } from "react";
-import { Table } from "rsuite";
+import {Table, Button, ButtonToolbar, Modal} from "rsuite";
+import { useForm } from "@inertiajs/inertia-react";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+
+
 import 'rsuite/styles/index.less'
 
 import EditProjectInfoDrawer from "@/Components/EditProjectInfoDrawer";
@@ -46,10 +53,34 @@ function AdminProjects(props) {
         setDrawerData({});
         setOpen(false);
     }
+
+    //////////////////////////////
+    const [openModal, setOpenModal] = useState(false);
+    const handleCloseModal = () => setOpenModal(false);
+    const handleOpenModal = () => setOpenModal(true);
+    console.log(openModal);
+
+
+
+
+
+    const { data, setData, post, processing, errors } = useForm({
+        name: "",
+        description: "",
+      })
+
+      function submit(e) {
+        e.preventDefault();
+        // post(route("project.add"));
+      }
+
+
     return (
         <Authenticated auth={props.auth}>
             <SidebarPage title="My Projects">
-
+                <ButtonToolbar className="pb-8">
+                    <Button color="violet" appearance="primary" onClick={handleOpenModal}>Add Project Managers</Button>
+                </ButtonToolbar>
                 <Table 
                 data={props.projects}
                 height={400}
@@ -94,6 +125,45 @@ function AdminProjects(props) {
             projectData={projectData}
             errors={props.errors}
             />
+
+
+            <Modal open={openModal} onClose={handleCloseModal}>
+            <Modal.Body>
+                <form onSubmit={submit}>
+                    <InputLabel forInput="name" value="name" />
+                    <TextInput
+                        id="name"
+                        type="text"
+                        name="name"
+                        value={data.name}
+                        className="mt-1 block w-full"
+                        isFocused={true}
+                        handleChange={(e) => setData("name", e.target.value)}
+                        required={true}
+                    />
+                    <InputError message={errors.name} className="mt-2" />
+
+                    <InputLabel forInput="description" value="description" />
+                    <TextInput
+                        id="description"
+                        type="text"
+                        name="description"
+                        value={data.description}
+                        className="mt-1 block w-full"
+                        isFocused={true}
+                        handleChange={(e) => setData("description", e.target.value)}
+                        required={true}
+                    />
+                    <InputError message={errors.description} className="mt-2" />
+
+                    <div className="flex items-center justify-start mt-4">
+                        <PrimaryButton processing={processing}>
+                            Save
+                        </PrimaryButton>
+                    </div>
+                </form>
+            </Modal.Body>
+            </Modal>
             </SidebarPage>
         </Authenticated>
     )

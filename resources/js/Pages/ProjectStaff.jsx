@@ -4,6 +4,7 @@ import { Button, ButtonToolbar, Modal, Table } from "rsuite";
 import { Link } from "@inertiajs/inertia-react";
 import 'rsuite/styles/index.less';
 import { useEffect, useState } from "react";
+
 function ProjectStaff(props) {
     
     const { Column, HeaderCell, Cell } = Table;
