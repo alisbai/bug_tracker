@@ -67,7 +67,7 @@ function AdminProjects(props) {
 
       function submit(e) {
         e.preventDefault();
-        // post(route("project.add"));
+        post(route("project.add"));
       }
 
 
@@ -153,7 +153,7 @@ function AdminProjects(props) {
                     <InputError message={errors.description} className="mt-2" />
 
                     <div className="flex items-center justify-start mt-4">
-                        <PrimaryButton processing={processing}>
+                        <PrimaryButton onClick={handleCloseModal} processing={processing}>
                             Save
                         </PrimaryButton>
                     </div>
