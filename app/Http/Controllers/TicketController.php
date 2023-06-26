@@ -47,15 +47,16 @@ class TicketController extends Controller
     }
     
     public function add(Request $request) {
+
        $ticket = new Ticket();
-       $ticket->project_id = $request->project_id;
-       $ticket->submitter_id=$request->submitter_id;
-       $ticket->developer_id=$request->developer_id;
+       $ticket->project_id = $request->project;
+       $ticket->submitter_id=Auth::user()->id;
+       $ticket->developer_id=$request->developer;
        $ticket->title=$request->title;
        $ticket->description=$request->description;
        $ticket->save();
-       $priority = TicketPriority::find($request->priority_id);
-       $type = TicketType::find($request->type_id);
+       $priority = TicketPriority::find($request->priority);
+       $type = TicketType::find($request->type);
        $ticket->priorities()->sync($priority);
        $ticket->types()->sync($type);
        return redirect()->back();
