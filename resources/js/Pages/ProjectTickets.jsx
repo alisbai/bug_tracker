@@ -2,7 +2,7 @@ import SidebarPage from "@/Components/SidbarPage";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link } from "@inertiajs/inertia-react";
 import { useState } from "react";
-import {Table, Button, ButtonToolbar, Modal} from "rsuite";
+import {Table, Button, ButtonToolbar, Modal, SelectPicker} from "rsuite";
 import { useForm } from "@inertiajs/inertia-react";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
@@ -10,6 +10,42 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 function ProjectTickets(props) {
+    const developers = props.developers.map(developer => {
+        return {
+            label: developer.first_name + " " + developer.last_name,
+            value: developer.id
+        }
+    });
+
+    const priorities = [{
+            label: "Low",
+            value: 1
+        },
+        {
+            label: "Medium",
+            value: 2
+        },
+        {
+            label: "High",
+            value: 3
+        }
+    ]
+
+    const types = [{
+            label: "Bug Fix",
+            value: 1
+        },
+        {
+            label: "Refactoring",
+            value: 2
+        },
+        {
+            label: "New Feature",
+            value: 3
+        }
+    ]
+
+
     const {Cell, HeaderCell, Column} = Table;
     
 
@@ -23,12 +59,11 @@ function ProjectTickets(props) {
         developer: null,
         priority: null,
         type: null,
-        status: null
       })
 
       function submit(e) {
         e.preventDefault();
-        // post(route("ticket.add"));
+        post(route("ticket.add"));
       }
 
     return (
@@ -62,11 +97,11 @@ function ProjectTickets(props) {
                     >
                         <HeaderCell>Actions</HeaderCell>
                         <Cell>{rowData => <Link 
-                                          href={route("ticket.get")}
-                                          data={{projectId: props.project.id,
-                                                 ticketId: rowData.id
+                                            href={route("ticket.get")}
+                                            data={{projectId: props.project.id,
+                                                    ticketId: rowData.id
                                                 }}
-                                          >view details</Link>}
+                                            >view details</Link>}
                         </Cell>
                     </Column>
                 </Table>
@@ -74,11 +109,11 @@ function ProjectTickets(props) {
                 <Modal open={openModal} onClose={handleCloseModal}>
                     <Modal.Body>
                         <form onSubmit={submit}>
-                            <InputLabel forInput="title" value="title" />
+                            <InputLabel forInput="title" value="Title" />
                             <TextInput
                                 id="title"
                                 type="text"
-                                name="name"
+                                name="title"
                                 value={data.title}
                                 className="mt-1 block w-full"
                                 isFocused={true}
@@ -87,7 +122,7 @@ function ProjectTickets(props) {
                             />
                             <InputError message={errors.title} className="mt-2" />
 
-                            <InputLabel forInput="description" value="description" />
+                            <InputLabel forInput="description" value="Description" />
                             <TextInput
                                 id="description"
                                 type="text"
@@ -99,6 +134,18 @@ function ProjectTickets(props) {
                                 required={true}
                             />
                             <InputError message={errors.description} className="mt-2" />
+
+                            <InputLabel className="mb-1" value="Priority" />
+                            
+                            <SelectPicker onChange={e => setData("priority", e)} className="w-full" data={priorities} />
+
+                            <InputLabel className="mb-1" value="Type" />
+                            
+                            <SelectPicker onChange={e => setData("type", e)} className="w-full" data={types} />
+
+                            <InputLabel className="mb-1" value="Developer" />
+                            
+                            <SelectPicker onChange={e => setData("developer", e)} required className="w-full" data={developers} />
 
                             <div className="flex items-center justify-start mt-4">
                                 <PrimaryButton processing={processing}>
