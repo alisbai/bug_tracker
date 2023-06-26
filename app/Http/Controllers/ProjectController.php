@@ -26,6 +26,17 @@ class ProjectController extends Controller
         }
     }
 
+    public function add(Request $request) {
+        if(!Gate::allows("edit_project_info")) {
+            abort(403);
+        }
+        $project = new Project();
+        $project->name = $request->name;
+        $project->description = $request->description;
+        $project->save();
+        return redirect()->route("projects.index");
+    }
+
     public function update(ProjectUpdateRequest $request) {
         if(!Gate::allows("edit_project_info")) {
             abort(403);
