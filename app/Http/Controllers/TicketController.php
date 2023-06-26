@@ -6,6 +6,9 @@ use App\Http\Requests\TicketGetRequest;
 use App\Http\Requests\TicketGetUserTicketRequest;
 use App\Models\Project;
 use App\Models\Ticket;
+use App\Models\TicketPriority;
+use App\Models\TicketStatus;
+use App\Models\TicketType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -41,6 +44,21 @@ class TicketController extends Controller
             'project' => $project,
             'ticket' => $ticket
         ]);
+    }
+    
+    public function add(Request $request) {
+       $ticket = new Ticket();
+       $ticket->project_id = $request->project_id;
+       $ticket->submitter_id=$request->submitter_id;
+       $ticket->developer_id=$request->developer_id;
+       $ticket->title=$request->title;
+       $ticket->description=$request->description;
+       $ticket->save();
+       $priority = TicketPriority::find($request->priority_id);
+       $type = TicketType::find($request->type_id);
+       $ticket->priorities()->sync($priority);
+       $ticket->types()->sync($type);
+       return redirect()->back();
     }
 
 }

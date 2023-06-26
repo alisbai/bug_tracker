@@ -27,7 +27,7 @@ class Ticket extends Model
     }
 
     public function priorities() {
-        return $this->belongsToMany(TicketPriority::class, "ticket_ticket_status", "ticket_id", "status_id");
+        return $this->belongsToMany(TicketPriority::class,'ticket_ticket_priority','ticket_id','priority_id');
     }
 
     public function statuses() {
