@@ -128,11 +128,17 @@ class ProjectController extends Controller
 
     public function tickets(ProjectTicketsRequest $request) {
         $project = Project::find($request->projectId);
+        
+        $developers = User::select('id','first_name','last_name')->whereHas('roles',function ($query) {
+             $query->where('title', '=', 'Developer');
+        })->get();
+
         $tickets = $project->tickets;
 
         return Inertia::render("ProjectTickets", [
             "project" => $project,
-            "tickets" => $tickets
+            "tickets" => $tickets,
+            'developers' => $developers
         ]);
         
     }
