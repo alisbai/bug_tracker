@@ -58,10 +58,6 @@ function AdminProjects(props) {
     const [openModal, setOpenModal] = useState(false);
     const handleCloseModal = () => setOpenModal(false);
     const handleOpenModal = () => setOpenModal(true);
-    console.log(openModal);
-
-
-
 
 
     const { data, setData, post, processing, errors } = useForm({
@@ -79,7 +75,7 @@ function AdminProjects(props) {
         <Authenticated auth={props.auth}>
             <SidebarPage title="My Projects">
                 <ButtonToolbar className="pb-8">
-                    <Button color="violet" appearance="primary" onClick={handleOpenModal}>Add Project Managers</Button>
+                    <Button color="violet" appearance="primary" onClick={handleOpenModal}>Add Project</Button>
                 </ButtonToolbar>
                 <Table 
                 data={props.projects}

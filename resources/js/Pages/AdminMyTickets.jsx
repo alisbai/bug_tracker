@@ -7,7 +7,6 @@ import 'rsuite/styles/index.less'
 
 
 function AdminMyTickets(props) {
-    console.log(props.ticket);
     return (
     <Authenticated auth={props.auth}>
         <SidebarPage title="My Tickets">
