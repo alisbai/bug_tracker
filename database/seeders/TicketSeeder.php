@@ -23,9 +23,9 @@ class TicketSeeder extends Seeder
         $types = TicketType::all();
         $statuses = TicketStatus::all();
         $tickets->each(function($ticket) use ($priorities, $types, $statuses) {
-            $ticket->types()->attach($types->random()->id);
-            $ticket->statuses()->attach($statuses->random()->id);
-            $ticket->priorities()->attach($priorities->random()->id);
+            $ticket->types()->attach("1");
+            $ticket->statuses()->attach("1");
+            $ticket->priorities()->attach("1");
         });
     }
 }
