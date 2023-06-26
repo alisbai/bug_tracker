@@ -82,7 +82,7 @@ function ProjectTickets(props) {
                                 value={data.title}
                                 className="mt-1 block w-full"
                                 isFocused={true}
-                                handleChange={(e) => setData("name", e.target.value)}
+                                handleChange={(e) => setData("title", e.target.value)}
                                 required={true}
                             />
                             <InputError message={errors.title} className="mt-2" />
