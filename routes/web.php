@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get("/ticket", [TicketController::class, "get"])->name("ticket.get");
     Route::post("add-comment", [CommentController::class, "add"])->name("comment.add");
     Route::get("/tickets", [TicketController::class, "all"])->name("tickets.list");
-    Route::get("/add-ticket", [TicketController::class, "add"])->name("ticket.add");
+    Route::post("/add-ticket", [TicketController::class, "add"])->name("ticket.add");
 });
 
 require __DIR__.'/auth.php';
