@@ -55,8 +55,10 @@ class TicketController extends Controller
        $ticket->description=$request->description;
        $ticket->save();
        $priority = TicketPriority::find($request->priority);
+       $status = TicketStatus::find(1);
        $type = TicketType::find($request->type);
        $ticket->priorities()->sync($priority);
+       $ticket->statuses()->sync($status);
        $ticket->types()->sync($type);
        return redirect()->back();
     }
