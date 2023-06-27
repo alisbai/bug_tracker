@@ -2,21 +2,45 @@ import SidebarPage from "@/Components/SidbarPage";
 import TicketInfo from "@/Components/TicketInfo";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link } from "@inertiajs/inertia-react";
-import { Table } from "rsuite";
+import { Table, ButtonToolbar, Button, Modal, Toggle } from "rsuite";
 import TextInput from "@/Components/TextInput";
+import InputLabel from "@/Components/InputLabel";
+import { useForm } from "@inertiajs/inertia-react";
+import PrimaryButton from "@/Components/PrimaryButton";
+
 
 import 'rsuite/styles/index.less'
 import { useState } from "react";
 
 function Ticket(props) {
 
+    const { data, setData, post, processing, errors } = useForm({
+        id: props.ticket.id,
+        status: props.ticket.statuses[0].id
+      })
+
+      console.log(data.status);
     const [comment, setComment] = useState("");
 
     const {Column, HeaderCell, Cell} = Table;
 
+    const [openModal, setOpenModal] = useState(false);
+    const handleCloseModal = () => setOpenModal(false);
+    const handleOpenModal = () => setOpenModal(true);
+
+    function submit(e) {
+        console.log(data);
+        e.preventDefault();
+        post(route("ticket.update"));
+        handleCloseModal();
+      }
+
     return (
         <Authenticated auth={props.auth}>
             <SidebarPage title={"Ticket: " + props.ticket.title}>
+                <ButtonToolbar className="pb-8">
+                    <Button color="violet" appearance="primary" onClick={handleOpenModal}>Update Ticket</Button>
+                </ButtonToolbar>            
                 <div className="flex">
                     <TicketInfo 
                     project={props.project}
@@ -55,6 +79,20 @@ function Ticket(props) {
                         </Table>
                     </div>
                 </div>
+
+                <Modal open={openModal} onClose={handleCloseModal}>
+                    <Modal.Body>
+                    <InputLabel value="Status" />
+                        <form onSubmit={submit}>
+                            <Toggle onChange={e => e ? setData("status", 1) : setData("status", 2)} size="lg" checkedChildren="Open" unCheckedChildren="Close" />
+                                <div className="flex items-center justify-start mt-4">
+                                    <PrimaryButton processing={processing}>
+                                        Save
+                                    </PrimaryButton>
+                                </div>
+                        </form>
+                    </Modal.Body>
+                </Modal>
             </SidebarPage>
         </Authenticated>
     )
