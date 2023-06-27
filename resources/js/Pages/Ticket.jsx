@@ -19,7 +19,6 @@ function Ticket(props) {
         status: props.ticket.statuses[0].id
       })
 
-      console.log(data.status);
     const [comment, setComment] = useState("");
 
     const {Column, HeaderCell, Cell} = Table;
@@ -29,7 +28,6 @@ function Ticket(props) {
     const handleOpenModal = () => setOpenModal(true);
 
     function submit(e) {
-        console.log(data);
         e.preventDefault();
         post(route("ticket.update"));
         handleCloseModal();
