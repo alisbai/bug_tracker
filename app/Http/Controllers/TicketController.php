@@ -47,7 +47,6 @@ class TicketController extends Controller
     }
     
     public function add(Request $request) {
-
        $ticket = new Ticket();
        $ticket->project_id = $request->project;
        $ticket->submitter_id=Auth::user()->id;

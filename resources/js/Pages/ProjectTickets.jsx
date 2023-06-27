@@ -56,6 +56,7 @@ function ProjectTickets(props) {
     const { data, setData, post, processing, errors } = useForm({
         title: "",
         description: "",
+        project: props.project.id,
         developer: null,
         priority: null,
         type: null,
@@ -64,6 +65,7 @@ function ProjectTickets(props) {
       function submit(e) {
         e.preventDefault();
         post(route("ticket.add"));
+        handleCloseModal();
       }
 
     return (
